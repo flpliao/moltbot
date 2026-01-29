@@ -1,0 +1,29 @@
+{
+  "name": "moltbot-deployment",
+  "version": "1.0.0",
+  "description": "Moltbot AI Assistant deployment with WhatsApp integration",
+  "main": "index.js",
+  "scripts": {
+    "start": "moltbot gateway --port ${PORT:-18789}",
+    "install-moltbot": "npm install -g moltbot@latest",
+    "setup": "npm run install-moltbot && moltbot onboard",
+    "restart": "moltbot daemon restart",
+    "status": "moltbot channels status",
+    "doctor": "moltbot doctor"
+  },
+  "keywords": [
+    "moltbot",
+    "ai",
+    "assistant",
+    "whatsapp",
+    "chatbot"
+  ],
+  "author": "flpliao",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24",
+    "npm": ">=10"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
