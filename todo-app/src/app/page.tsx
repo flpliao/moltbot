@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, Check, Trash2, Circle, CheckCircle2, ListTodo, ClipboardList } from 'lucide-react';
+import { Plus, Trash2, Circle, CheckCircle2, ListTodo, ClipboardList } from 'lucide-react';
 
 interface Todo {
   id: string;
@@ -80,26 +80,35 @@ export default function Home() {
 
   if (!isLoaded) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center">
-        <div className="animate-pulse text-slate-400">載入中...</div>
+      <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 flex items-center justify-center">
+        <div className="animate-pulse text-slate-500">載入中...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8 px-4">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-50 to-pink-100 py-8 px-4">
+      {/* Decorative blurred circles */}
+      <div className="fixed top-20 left-20 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+      <div className="fixed top-40 right-20 w-72 h-72 bg-yellow-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+      <div className="fixed bottom-20 left-1/2 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+
+      <div className="max-w-2xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-3 mb-2">
-            <ListTodo className="w-10 h-10 text-blue-500" />
-            <h1 className="text-4xl font-bold text-slate-800">Todo List</h1>
+            <div className="p-3 bg-white/30 backdrop-blur-md rounded-2xl border border-white/40 shadow-lg">
+              <ListTodo className="w-8 h-8 text-blue-600" />
+            </div>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Todo List
+            </h1>
           </div>
-          <p className="text-slate-500">簡單高效地管理你的任務</p>
+          <p className="text-slate-600">簡單高效地管理你的任務</p>
         </div>
 
-        {/* Input Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 mb-6">
+        {/* Input Section - Glass Card */}
+        <div className="bg-white/40 backdrop-blur-lg rounded-3xl shadow-lg border border-white/50 p-5 mb-6">
           <div className="flex gap-3">
             <input
               type="text"
@@ -107,16 +116,19 @@ export default function Home() {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="新增任務..."
-              className="flex-1 px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                         text-slate-700 placeholder:text-slate-400 transition-all"
+              className="flex-1 px-5 py-3.5 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/60 
+                         focus:outline-none focus:ring-2 focus:ring-blue-400/50 focus:border-transparent
+                         text-slate-700 placeholder:text-slate-400 transition-all shadow-inner"
             />
             <button
               onClick={addTodo}
               disabled={inputValue.trim() === ''}
-              className="px-6 py-3 bg-blue-500 hover:bg-blue-600 disabled:bg-slate-300
-                         text-white rounded-xl font-medium transition-all
-                         flex items-center gap-2 shadow-sm hover:shadow-md disabled:shadow-none"
+              className="px-6 py-3.5 bg-gradient-to-r from-blue-500 to-purple-500 
+                         hover:from-blue-600 hover:to-purple-600 
+                         disabled:from-slate-300 disabled:to-slate-400
+                         text-white rounded-2xl font-medium transition-all
+                         flex items-center gap-2 shadow-lg hover:shadow-xl 
+                         disabled:shadow-none hover:scale-105 active:scale-95"
             >
               <Plus className="w-5 h-5" />
               新增
@@ -124,16 +136,16 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Filter Tabs */}
+        {/* Filter Tabs - Glass Style */}
         <div className="flex gap-2 mb-4">
           {(['all', 'active', 'completed'] as FilterType[]).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
+              className={`px-4 py-2.5 rounded-xl font-medium transition-all ${
                 filter === f
-                  ? 'bg-blue-500 text-white shadow-sm'
-                  : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
+                  ? 'bg-white/70 backdrop-blur-md text-blue-600 shadow-lg border border-white/60'
+                  : 'bg-white/30 backdrop-blur-sm text-slate-600 hover:bg-white/50 border border-white/40'
               }`}
             >
               {f === 'all' && `全部 (${todos.length})`}
@@ -143,32 +155,34 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Todo List */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        {/* Todo List - Glass Card */}
+        <div className="bg-white/40 backdrop-blur-lg rounded-3xl shadow-lg border border-white/50 overflow-hidden">
           {filteredTodos.length === 0 ? (
             <div className="py-16 text-center">
-              <ClipboardList className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-              <p className="text-slate-400 text-lg">
+              <div className="inline-flex p-4 bg-white/30 backdrop-blur-sm rounded-2xl mb-4">
+                <ClipboardList className="w-12 h-12 text-slate-400" />
+              </div>
+              <p className="text-slate-500 text-lg">
                 {filter === 'all' && '尚無任務，開始新增吧！'}
                 {filter === 'active' && '沒有進行中的任務'}
                 {filter === 'completed' && '尚未完成任何任務'}
               </p>
             </div>
           ) : (
-            <ul className="divide-y divide-slate-100">
+            <ul className="divide-y divide-white/30">
               {filteredTodos.map((todo) => (
                 <li
                   key={todo.id}
-                  className="group flex items-center gap-4 p-4 hover:bg-slate-50 transition-colors"
+                  className="group flex items-center gap-4 p-4 hover:bg-white/20 transition-all"
                 >
                   <button
                     onClick={() => toggleTodo(todo.id)}
                     className="flex-shrink-0 transition-transform hover:scale-110"
                   >
                     {todo.completed ? (
-                      <CheckCircle2 className="w-6 h-6 text-green-500" />
+                      <CheckCircle2 className="w-7 h-7 text-green-500 drop-shadow-sm" />
                     ) : (
-                      <Circle className="w-6 h-6 text-slate-300 hover:text-blue-400" />
+                      <Circle className="w-7 h-7 text-slate-400 hover:text-blue-400" />
                     )}
                   </button>
                   
@@ -184,9 +198,9 @@ export default function Home() {
                   
                   <button
                     onClick={() => deleteTodo(todo.id)}
-                    className="flex-shrink-0 p-2 rounded-lg text-slate-400 
+                    className="flex-shrink-0 p-2.5 rounded-xl text-slate-400 
                                opacity-0 group-hover:opacity-100
-                               hover:bg-red-50 hover:text-red-500 transition-all"
+                               hover:bg-red-100/50 hover:text-red-500 transition-all"
                   >
                     <Trash2 className="w-5 h-5" />
                   </button>
@@ -196,14 +210,15 @@ export default function Home() {
           )}
         </div>
 
-        {/* Footer Stats */}
+        {/* Footer Stats - Glass Style */}
         {todos.length > 0 && (
-          <div className="flex items-center justify-between mt-4 px-2 text-sm text-slate-500">
-            <span>{activeCount} 個任務待完成</span>
+          <div className="flex items-center justify-between mt-4 px-4 py-3 
+                          bg-white/30 backdrop-blur-sm rounded-2xl border border-white/40">
+            <span className="text-slate-600 text-sm">{activeCount} 個任務待完成</span>
             {completedCount > 0 && (
               <button
                 onClick={clearCompleted}
-                className="hover:text-red-500 transition-colors"
+                className="text-sm text-slate-500 hover:text-red-500 transition-colors"
               >
                 清除已完成
               </button>
@@ -212,7 +227,7 @@ export default function Home() {
         )}
 
         {/* Credit */}
-        <p className="text-center text-slate-400 text-sm mt-8">
+        <p className="text-center text-slate-500 text-sm mt-8">
           Made with ❤️ by 廖小雄
         </p>
       </div>
