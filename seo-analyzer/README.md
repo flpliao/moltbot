@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SEO & GEO 分析工具
 
-## Getting Started
+一個強大的網站 SEO 和內容質量分析工具，基於 [Next.js](https://nextjs.org) 構建。
 
-First, run the development server:
+## 功能特性
+
+- 📊 **SEO 分析**
+  - Meta 標籤檢測（Title、Description）
+  - 標題結構分析（H1、H2、H3）
+  - 圖片 Alt 標籤檢查
+  - 內部/外部連結計數
+  - Open Graph 和 Schema.org 標記檢測
+  - Robots 和 Viewport 配置
+
+- 🧠 **GEO 分析**（Google E-E-A-T）
+  - 結構化內容檢測
+  - 常見問題（FAQ）識別
+  - 清晰度評分
+  - 可讀性分析
+  - 引用指標檢查
+
+- 📈 **綜合評分**
+  - SEO 評分
+  - GEO 評分
+  - 整體評分
+  - 改進建議
+
+## 快速開始
+
+### 開發環境
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+開啟 [http://localhost:3000](http://localhost:3000) 查看應用。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 生產環境
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## 部署
 
-To learn more about Next.js, take a look at the following resources:
+### Vercel（推薦）
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. 前往 [vercel.com](https://vercel.com)
+2. 導入此 GitHub 儲存庫
+3. 選擇 `seo-analyzer` 為根目錄
+4. 點擊部署
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Railway
 
-## Deploy on Vercel
+1. 前往 [railway.app](https://railway.app)
+2. 建立新專案
+3. 連接 GitHub 儲存庫
+4. 選擇 `seo-analyzer` 目錄
+5. 設定 Start Command: `npm run build && npm start`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## API 端點
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### POST /api/analyze
+
+分析指定 URL 的 SEO 和 GEO 指標。
+
+**請求：**
+```json
+{
+  "url": "https://example.com"
+}
+```
+
+**回應：**
+```json
+{
+  "success": true,
+  "seo": {},
+  "geo": {},
+  "score": {
+    "seo": 85,
+    "geo": 78,
+    "overall": 82
+  },
+  "recommendations": []
+}
+```
+
+## 技術棧
+
+- [Next.js 16](https://nextjs.org/)
+- [React 19](https://react.dev/)
+- [Cheerio](https://cheerio.js.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+
+## 授權
+
+MIT
